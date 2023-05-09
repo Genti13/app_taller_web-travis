@@ -13,6 +13,9 @@ public class Persona {
 	private Long id;
 	@Column
 	private String nombre;
+	//Estado => Eenfermedades: Celiaco o Sano
+	@Column
+	private Estado estado;
 	@Column
 	private String apellido;
 	@Column
@@ -42,4 +45,6 @@ public class Persona {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public Estado getEstado(){return this.estado;}
+	public void setEstado(Estado estado){this.estado = estado;}
 }
