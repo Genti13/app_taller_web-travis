@@ -36,11 +36,11 @@ public class EstadoTest extends SpringTest {
                 .list();
 
         /*Esto Esta solo para ver el guardado*/
-//        for (Estado estado : estados) {
-//            for (String restriccion: estado.getRestricciones()) {
-//                System.out.print(restriccion+"\n");
-//            }
-//        }
+////        for (Estado estado : estados) {
+////            for (String restriccion: estado.getRestricciones()) {
+////                System.out.print(restriccion+"\n");
+////            }
+////        }
 
         assertThat(estados).hasSize(1);
     }
