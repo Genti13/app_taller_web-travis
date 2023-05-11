@@ -4,28 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dieta {
-    private List<Menu> menues;
-
-    public Dieta(List<Menu> menu) {
-        this.menues = menu;
-    }
-
-    public Dieta(Menu menu) {
-        this.menues = new ArrayList<Menu>();
-        this.menues.add(menu);
-    }
+    private List<Menu> menus;
+    private List<Rutina> rutinas;
 
     public Dieta() {
-
+        this.menus = new ArrayList<>();
     }
 
-//    public void agregarMenu(Menu menu, ArrayList<String> restricciones) {
-//        ArrayList<Plato> platos = (ArrayList<Plato>) menu.getPlatos();
-//
-//        for (Plato plato:platos) {
-//            for (String ingrediente: plato.getIngredientes()) {
-//
-//            }
-//        }
-//    }
+    public List<Rutina> getRutinas() {
+        return rutinas;
+    }
+
+    public void setRutinas(List<Rutina> rutinas) {
+        this.rutinas = rutinas;
+    }
+
+    public List<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
+    }
 }
