@@ -2,25 +2,21 @@ package ar.edu.unlam.tallerweb1.domain.persona;
 
 import ar.edu.unlam.tallerweb1.domain.estados.Estado;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-
+@Entity
 public class Persona {
 
-
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-
+	@Column
 	private String nombre;
 	//Estado => Eenfermedades: Celiaco o Sano
-
+	@OneToOne
 	private Estado estado;
-
+	@Column
 	private String apellido;
-
+	@Column
 	private String email;
 	
 	public Long getId() {
