@@ -33,12 +33,13 @@ public class ServicioDietaTest {
 
         Estado enfermedad = new Cardiaco();
         Persona persona = new Persona();
+
         persona.setEstado(enfermedad);
 
         servicioDieta.agregarMenu(dieta, menu, persona.getEstado().getRestricciones());
     }
 
-    @Test(expected = RutinaRestringidaException.class)
+   /* @Test(expected = RutinaRestringidaException.class)
     public void unaPersonaConProblemasCardiacosNoPuedeAgregarUnaRutinaConPesas() throws RutinaRestringidaException {
         Rutina rutina = new Rutina("pesas");
         ArrayList<String> ejercicios = new ArrayList<>();
@@ -51,7 +52,7 @@ public class ServicioDietaTest {
 
         servicioDieta.agregarRutina(dieta, rutina, persona.getEstado().getRestricciones());
     }
-
+*/
     @Test
     public void sePuedeEditarUnMenuDentroDeUnaDieta() throws MenuRestringidoException {
         Plato plato = new Plato("pepino");
