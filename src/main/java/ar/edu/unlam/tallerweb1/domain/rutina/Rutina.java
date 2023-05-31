@@ -13,6 +13,10 @@ public class Rutina {
         this.ejercicios = ejercicios;
     }
 
+    public Rutina() {
+
+    }
+
     public List<Ejercicio> getEjercicios() {
         return ejercicios;
     }

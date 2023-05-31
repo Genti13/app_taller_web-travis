@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
+import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioLogin;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.junit.Before;
@@ -15,12 +16,15 @@ public class ControladorLoginTest {
     private HttpServletRequest request;
     private HttpSession sesion;
     private ControladorLogin controladorLogin;
+    private RepositorioUsuario repositorioUsuario;
+
 
     @Before
     public void init() {
         servicioLogin = mock(ServicioLogin.class);
         sesion = mock(HttpSession.class);
         request = mock(HttpServletRequest.class);
+        repositorioUsuario = mock(RepositorioUsuario.class);
         controladorLogin = new ControladorLogin(this.servicioLogin);
     }
 
@@ -37,6 +41,27 @@ public class ControladorLoginTest {
         entoncesMeDevuelveLaVistaCorrecta(vista);
 
         entoncesInicioSesion(ROL);
+    }
+
+    @Test
+    public void dadoQueNoExisteUnUsuarioNoIniciaSesion(){
+        String ROL = "admin";
+        Usuario usuarioEsperado = dadoQueTengoUnUsuarioConRol(ROL);
+        DatosLogin datosLogin = dadoQueTengoDatosDeLoginValidos();
+
+        when(servicioLogin.consultarUsuario(any(), any())).thenReturn(null);
+
+        when(request.getSession()).thenReturn(sesion);
+        when(sesion.getAttribute("ROL")).thenReturn(ROL);
+
+        ModelAndView vista = controladorLogin.validarLogin(datosLogin, request);
+
+        assertThat(vista.getViewName()).isEqualTo(("login"));
+    }
+
+    @Test
+    public void dadoUnUsuarioInactivoNoSeInicieSesion(){
+
     }
 
     //Cuando

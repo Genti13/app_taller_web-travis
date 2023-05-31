@@ -47,7 +47,10 @@ public class ServicioDietaImp implements ServicioDieta {
     public void agregarRutina(Dieta dieta, Rutina rutina, ArrayList<String> restricciones) throws RutinaRestringidaException {
         List<Ejercicio> ejercicios = rutina.getEjercicios();
 
+
+
         for (Ejercicio ejercicio : ejercicios) {
+            System.out.print(restricciones);
             if (restricciones.contains(ejercicio.getNombre())) {
                 throw new RutinaRestringidaException("La rutina contiene ejercicios restringidos.");
             }
@@ -69,4 +72,5 @@ public class ServicioDietaImp implements ServicioDieta {
             dieta.getRutinas().set(index, rutinaNueva);
         }
     }
+
 }
