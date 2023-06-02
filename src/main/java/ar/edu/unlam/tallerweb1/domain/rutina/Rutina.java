@@ -3,10 +3,16 @@ package ar.edu.unlam.tallerweb1.domain.rutina;
 import ar.edu.unlam.tallerweb1.domain.estados.Estado;
 import ar.edu.unlam.tallerweb1.domain.ejercicio.Ejercicio;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Rutina {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    @OneToMany
     private List<Ejercicio> ejercicios;
 
     public Rutina(List<Ejercicio> ejercicios) {

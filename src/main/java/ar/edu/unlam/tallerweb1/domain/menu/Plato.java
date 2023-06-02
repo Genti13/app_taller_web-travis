@@ -1,10 +1,18 @@
 package ar.edu.unlam.tallerweb1.domain.menu;
 
+import org.hibernate.annotations.CollectionType;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
 public class Plato {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long Id;
+    @ElementCollection
     private List<String> ingredientes;
 
     public Plato(List<String> ingredientes) {

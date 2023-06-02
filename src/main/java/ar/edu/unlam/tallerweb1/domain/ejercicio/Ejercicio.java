@@ -1,7 +1,15 @@
 package ar.edu.unlam.tallerweb1.domain.ejercicio;
 
+import javax.persistence.*;
+
+@Entity
 public class Ejercicio {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    @Column
     private String nombre;
+    @Column
     private int duracion;
 
     public Ejercicio(String nombre) {

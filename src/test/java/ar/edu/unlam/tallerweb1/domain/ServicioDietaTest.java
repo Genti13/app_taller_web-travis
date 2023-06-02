@@ -42,7 +42,7 @@ public class ServicioDietaTest {
 
         persona.setEstado(enfermedad);
 
-        servicioDieta.agregarMenu(dieta, menu, persona.getEstado().getRestricciones());
+        servicioDieta.agregarMenu(dieta, menu, (ArrayList<String>) persona.getEstado().getRestricciones());
     }
 
     @Test(expected = RutinaRestringidaException.class)

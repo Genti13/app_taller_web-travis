@@ -1,6 +1,9 @@
 package ar.edu.unlam.tallerweb1.domain.estados;
+import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
+
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public abstract class Estado {
@@ -14,10 +17,12 @@ public abstract class Estado {
     @Column
     protected String nombre;
 
-    @Column
-    protected ArrayList<String> restricciones;
+    @Column @ElementCollection
+    protected List<String> restricciones;
 
-    public ArrayList<String> getRestricciones(){
+
+
+    public List<String> getRestricciones(){
         return  this.restricciones;
     }
 

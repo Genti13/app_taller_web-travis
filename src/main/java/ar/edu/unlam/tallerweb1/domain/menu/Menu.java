@@ -1,10 +1,16 @@
 package ar.edu.unlam.tallerweb1.domain.menu;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
 public class Menu {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+    @OneToMany
     private List<Plato> platos;
 
     public Menu(List<Plato> platos) {

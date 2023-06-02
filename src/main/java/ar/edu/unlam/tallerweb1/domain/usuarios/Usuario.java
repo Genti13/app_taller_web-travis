@@ -1,9 +1,10 @@
 package ar.edu.unlam.tallerweb1.domain.usuarios;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import ar.edu.unlam.tallerweb1.domain.dieta.Dieta;
+import ar.edu.unlam.tallerweb1.domain.estados.Estado;
+
+import javax.persistence.*;
+import java.util.List;
 
 // Clase que modela el concepto de Usuario, la anotacion @Entity le avisa a hibernate que esta clase es persistible
 // el paquete ar.edu.unlam.tallerweb1.modelo esta indicado en el archivo hibernateCOntext.xml para que hibernate
@@ -21,6 +22,11 @@ public class Usuario {
 	private String password;
 	private String rol;
 	private Boolean activo = false;
+
+	@OneToMany
+	private List<Estado> estado;
+	@OneToMany
+	private  List<Dieta> dieta;
 	
 	public Long getId() {
 		return id;
@@ -52,12 +58,14 @@ public class Usuario {
 	public void setActivo(Boolean activo) {
 		this.activo = activo;
 	}
-
+	public List<Estado> getEstado() {return estado;}
+	public void setEstado(List<Estado> estado) {this.estado = estado;}
 	public boolean activo() {
 		return activo;
     }
-
     public void activar() {
 		activo = true;
     }
+	public List<Dieta> getDieta() {return dieta;}
+	public void setDieta(List<Dieta> dieta) {this.dieta = dieta;}
 }

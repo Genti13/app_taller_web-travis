@@ -16,7 +16,7 @@ import java.util.List;
 public class ServicioDietaImp implements ServicioDieta {
 
     @Override
-    public void agregarMenu(Dieta dieta, Menu menu, ArrayList<String> restricciones) throws MenuRestringidoException {
+    public void agregarMenu(Dieta dieta, Menu menu, List<String> restricciones) throws MenuRestringidoException {
         ArrayList<Plato> platos = (ArrayList<Plato>) menu.getPlatos();
 
         for (Plato plato : platos) {
@@ -44,10 +44,8 @@ public class ServicioDietaImp implements ServicioDieta {
     }
 
     @Override
-    public void agregarRutina(Dieta dieta, Rutina rutina, ArrayList<String> restricciones) throws RutinaRestringidaException {
+    public void agregarRutina(Dieta dieta, Rutina rutina, List<String> restricciones) throws RutinaRestringidaException {
         List<Ejercicio> ejercicios = rutina.getEjercicios();
-
-
 
         for (Ejercicio ejercicio : ejercicios) {
             System.out.print(restricciones);
