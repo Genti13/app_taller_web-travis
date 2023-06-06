@@ -84,17 +84,64 @@ public class ServicioDietaTest {
         dietasMock.add(makeRutina());
         dietasMock.add(makeRutina());
 
-        when(this.repositorioDieta.get()).thenReturn(dietasMock);
+        when(this.repositorioDieta.getRutinas()).thenReturn(dietasMock);
 
-        List<Rutina> dieta = repositorioDieta.get();
+        List<Rutina> dieta = repositorioDieta.getRutinas();
 
         assertThat(dieta).isNotNull();
         assertThat(dieta.size()).isEqualTo(2);
     }
 
+    @Test
+    public void unaDietaTieneUnPuntaje(){
+        final int VALOR_ESPERADO = 13;
+        when(repositorioDieta.getAllDietas()).thenReturn(this.makeDieta());
+        List<Dieta> dietas = repositorioDieta.getAllDietas();
+
+        Dieta dietaACalcular = dietas.get(0);
+        int puntajeObtenido = servicioDieta.calcularPuntaje(dietaACalcular);
+
+        assertThat(VALOR_ESPERADO).isEqualTo(puntajeObtenido);
+    }
+
+    private List<Dieta> makeDieta(){
+        Dieta dieta = new Dieta();
+
+        ArrayList<Rutina> rutinas = new ArrayList<Rutina>();
+        rutinas.add(makeRutina());
+
+        List<Menu> menus = new ArrayList<Menu>();
+        menus.add(makeMenu());
+
+        dieta.setMenus(menus);
+        dieta.setRutinas(rutinas);
+
+        List<Dieta> dietas = new ArrayList<Dieta>();
+
+        dietas.add(dieta);
+
+        return dietas;
+    }
+    private Menu makeMenu() {
+        String in1 = "Pepino";
+        String ing2 = "Berenjena";
+
+        List<String> ingredientes = new ArrayList<String>();
+
+        ingredientes.add(in1);
+        ingredientes.add(ing2);
+
+        Plato plato = new Plato(ingredientes);
+
+        return new Menu(plato);
+    }
+
     private Rutina makeRutina(){
         Ejercicio ej1 = new Ejercicio("Pesas");
         Ejercicio ej2 = new Ejercicio("Flexiones");
+
+        ej1.setDuracion(5);
+        ej2.setDuracion(5);
 
         List<Ejercicio> ejercicios = new ArrayList<>();
 

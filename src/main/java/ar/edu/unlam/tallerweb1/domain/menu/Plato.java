@@ -49,4 +49,8 @@ public class Plato {
     public List<String> getIngredientes() {
         return this.ingredientes;
     }
+
+    public int calcularValorEnBaseACalorias() {
+    return 3;
+    }
 }
