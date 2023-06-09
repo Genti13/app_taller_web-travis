@@ -73,7 +73,6 @@ public class Dieta {
         this.id = id;
     }
 
-
     public void setPuntaje(int puntaje) {
         this.puntaje = puntaje;
     }
