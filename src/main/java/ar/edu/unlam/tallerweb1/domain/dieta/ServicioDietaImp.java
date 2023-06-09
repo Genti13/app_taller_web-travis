@@ -1,4 +1,5 @@
 package ar.edu.unlam.tallerweb1.domain.dieta;
+import ar.edu.unlam.tallerweb1.domain.menu.Ingrediente;
 import ar.edu.unlam.tallerweb1.domain.menu.Menu;
 import ar.edu.unlam.tallerweb1.domain.menu.MenuRestringidoException;
 import ar.edu.unlam.tallerweb1.domain.menu.Plato;
@@ -20,8 +21,8 @@ public class ServicioDietaImp implements ServicioDieta {
         ArrayList<Plato> platos = (ArrayList<Plato>) menu.getPlatos();
 
         for (Plato plato : platos) {
-            for (String ingrediente : plato.getIngredientes()) {
-                if (restricciones.contains(ingrediente)) {
+            for (Ingrediente ingrediente : plato.getIngredientes()) {
+                if (restricciones.contains(ingrediente.getNombre())) {
                     throw new MenuRestringidoException("El menú contiene ingredientes restringidos.");
                 }
             }

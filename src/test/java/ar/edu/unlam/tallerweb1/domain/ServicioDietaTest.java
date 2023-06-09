@@ -5,6 +5,7 @@ import ar.edu.unlam.tallerweb1.domain.dieta.RepositorioDieta;
 import ar.edu.unlam.tallerweb1.domain.dieta.ServicioDietaImp;
 import ar.edu.unlam.tallerweb1.domain.ejercicio.Ejercicio;
 import ar.edu.unlam.tallerweb1.domain.estados.*;
+import ar.edu.unlam.tallerweb1.domain.menu.Ingrediente;
 import ar.edu.unlam.tallerweb1.domain.menu.Menu;
 import ar.edu.unlam.tallerweb1.domain.menu.MenuRestringidoException;
 import ar.edu.unlam.tallerweb1.domain.menu.Plato;
@@ -34,7 +35,8 @@ public class ServicioDietaTest {
 
     @Test(expected = MenuRestringidoException.class)
     public void unaPersonaConProblemasCardiacosNoPuedeAgregarUnMenuConSal() throws MenuRestringidoException {
-        Plato plato = new Plato("sal");
+        Ingrediente sal = new Ingrediente("sal", 10);
+        Plato plato = new Plato(sal);
         Menu menu = new Menu(plato);
 
         Estado enfermedad = new Cardiaco();
@@ -42,7 +44,7 @@ public class ServicioDietaTest {
 
         persona.setEstado(enfermedad);
 
-        servicioDieta.agregarMenu(dieta, menu, (ArrayList<String>) persona.getEstado().getRestricciones());
+        servicioDieta.agregarMenu(dieta, menu, persona.getEstado().getRestricciones());
     }
 
     @Test(expected = RutinaRestringidaException.class)
@@ -52,7 +54,6 @@ public class ServicioDietaTest {
         ArrayList<Ejercicio> ejercicios = new ArrayList<>();
         ejercicios.add(new Ejercicio("Pesas"));
         rutina.setEjercicios(ejercicios);
-
         Persona persona = makePersona();
 
         servicioDieta.agregarRutina(dieta, rutina, persona.getEstado().getRestricciones());
@@ -60,7 +61,9 @@ public class ServicioDietaTest {
 
     @Test
     public void sePuedeEditarUnMenuDentroDeUnaDieta() throws MenuRestringidoException {
-        Plato plato = new Plato("pepino");
+
+        Ingrediente pepino = new Ingrediente("pepino", 25);
+        Plato plato = new Plato(pepino);
         Menu menu = new Menu(plato);
 
         Persona persona = new Persona();
@@ -68,7 +71,7 @@ public class ServicioDietaTest {
 
         servicioDieta.agregarMenu(dieta, menu, persona.getEstado().getRestricciones());
 
-        Plato newPlato = new Plato("pepino");
+        Plato newPlato = new Plato(pepino);
         Menu newMenu = new Menu(newPlato);
 
         servicioDieta.modificarMenu(dieta, menu, newMenu);
@@ -94,7 +97,7 @@ public class ServicioDietaTest {
 
     @Test
     public void unaDietaTieneUnPuntaje(){
-        final int VALOR_ESPERADO = 13;
+        final int VALOR_ESPERADO = 30;
         when(repositorioDieta.getAllDietas()).thenReturn(this.makeDieta());
         List<Dieta> dietas = repositorioDieta.getAllDietas();
 
@@ -123,10 +126,10 @@ public class ServicioDietaTest {
         return dietas;
     }
     private Menu makeMenu() {
-        String in1 = "Pepino";
-        String ing2 = "Berenjena";
+        Ingrediente in1 = new Ingrediente("Pepino",10);
+        Ingrediente ing2 = new Ingrediente("Berenjena",10);
 
-        List<String> ingredientes = new ArrayList<String>();
+        List<Ingrediente> ingredientes = new ArrayList<>();
 
         ingredientes.add(in1);
         ingredientes.add(ing2);

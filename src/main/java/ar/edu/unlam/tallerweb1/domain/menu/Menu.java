@@ -44,15 +44,10 @@ public class Menu {
     }
 
     public int calcularValor() {
-        List<Plato> platos = this.platos;
-
-        int valor =0;
-
-        for (Plato plato : platos){
+        int valor = 0;
+        for (Plato plato : platos) {
             valor += plato.calcularValorEnBaseACalorias();
         }
-
-
         return valor;
     }
 }
