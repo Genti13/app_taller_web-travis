@@ -9,6 +9,9 @@ import java.util.List;
 
 @Entity
 public class Persona {
+	public Persona() {
+		this.conditionScore = new ConditionScore();
+	}
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -67,7 +70,7 @@ public class Persona {
 	public void setEstado(Estado estado){this.estado = estado;}
 
     public ConditionScore getConditionScore() {
-		return this.getConditionScore();
+		return this.conditionScore;
     }
 
 	public void setEdad(int edad) {

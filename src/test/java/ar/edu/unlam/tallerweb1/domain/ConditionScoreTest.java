@@ -8,6 +8,7 @@ import ar.edu.unlam.tallerweb1.domain.dieta.ServicioDietaImp;
 import ar.edu.unlam.tallerweb1.domain.ejercicio.Ejercicio;
 import ar.edu.unlam.tallerweb1.domain.estados.Cardiaco;
 import ar.edu.unlam.tallerweb1.domain.estados.Estado;
+import ar.edu.unlam.tallerweb1.domain.menu.Ingrediente;
 import ar.edu.unlam.tallerweb1.domain.menu.Menu;
 import ar.edu.unlam.tallerweb1.domain.menu.Plato;
 import ar.edu.unlam.tallerweb1.domain.persona.Persona;
@@ -38,7 +39,7 @@ public class ConditionScoreTest {
 
     @Test
     public void valorInicialDeCSdeUserEs50(){
-        Persona persona = new Persona();
+        Persona persona = makePersona();
         assertThat(servicioConditionScore.getActual(persona)).isEqualTo(50);
     }
 
@@ -79,13 +80,10 @@ public class ConditionScoreTest {
         return dietas;
     }
     private Menu makeMenu() {
-        String in1 = "Pepino";
-        String ing2 = "Berenjena";
+        List<Ingrediente> ingredientes = new ArrayList<Ingrediente>();
 
-        List<String> ingredientes = new ArrayList<String>();
-
-        ingredientes.add(in1);
-        ingredientes.add(ing2);
+        ingredientes.add(new Ingrediente("Pepino", 500));
+        ingredientes.add(new Ingrediente("Berenjena", 282));
 
         Plato plato = new Plato(ingredientes);
 
