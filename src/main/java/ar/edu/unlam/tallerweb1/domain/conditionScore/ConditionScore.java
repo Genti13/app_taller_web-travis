@@ -14,4 +14,8 @@ public class ConditionScore {
     public Integer getLastCS() {
         return this.historico.get(0);
     }
+
+    public void setHistorico(List<Integer> historico) {
+        this.historico = historico;
+    }
 }

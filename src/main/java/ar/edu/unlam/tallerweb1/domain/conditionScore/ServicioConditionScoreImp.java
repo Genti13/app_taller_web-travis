@@ -4,21 +4,27 @@ import ar.edu.unlam.tallerweb1.domain.dieta.ServicioDietaImp;
 import ar.edu.unlam.tallerweb1.domain.persona.Persona;
 import ar.edu.unlam.tallerweb1.domain.persona.ServicioPersonaImp;
 
-public class ServicioConditionScoreImp {
+public class ServicioConditionScoreImp implements  ServicioConditionScore{
     private static final int VALOR_MIN_PERDIDA = 500;
     private static final int VALOR_MAX_PERDIDA = 1000;
     private static final int VALOR_MIN_GANANCIA = 250;
     private static final int VALOR_MAX_GANANCIA = 500;
     private static  final  int VALOR_MANTENER_PESO = 100;
 
+    private ServicioPersonaImp servicioPersona;
+    private ServicioDietaImp servicioDieta;
+
+    public ServicioConditionScoreImp(ServicioPersonaImp servicioPersona, ServicioDietaImp servicioDieta) {
+        this.servicioDieta = servicioDieta;
+        this.servicioPersona = servicioPersona;
+    }
     public Integer getActual(Persona persona) {
         return persona.getConditionScore().getLastCS();
     }
 
-    public int calculateEffectivity(Persona persona) {
-        ServicioPersonaImp servicioPersona = new ServicioPersonaImp();
-        ServicioDietaImp servicioDieta = new ServicioDietaImp();
 
+
+    public int calculateEffectivity(Persona persona) {
         int tmb = servicioPersona.getTMB(persona); //necesita 1500
         int caloriasDieta = servicioDieta.calcularPuntaje(persona.getDieta().get(0));  //dieta es perder peso
         int objetivo = persona.getObjetivo(); //1
@@ -43,6 +49,6 @@ public class ServicioConditionScoreImp {
             }
         }
 
-        return  puntajeCS;
+        return  puntajeCS > 10 ? 10 : puntajeCS < -10 ? -10 : puntajeCS;
     }
 }

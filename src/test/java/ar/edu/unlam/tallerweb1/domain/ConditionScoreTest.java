@@ -4,6 +4,7 @@ import ar.edu.unlam.tallerweb1.domain.conditionScore.ConditionScore;
 import ar.edu.unlam.tallerweb1.domain.conditionScore.ServicioConditionScoreImp;
 import ar.edu.unlam.tallerweb1.domain.dieta.Dieta;
 import ar.edu.unlam.tallerweb1.domain.dieta.RepositorioDieta;
+import ar.edu.unlam.tallerweb1.domain.dieta.ServicioDieta;
 import ar.edu.unlam.tallerweb1.domain.dieta.ServicioDietaImp;
 import ar.edu.unlam.tallerweb1.domain.ejercicio.Ejercicio;
 import ar.edu.unlam.tallerweb1.domain.estados.Cardiaco;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -30,38 +32,49 @@ public class ConditionScoreTest {
     private ServicioConditionScoreImp servicioConditionScore;
     private RepositorioPersona repositorioPersona;
     private ServicioPersonaImp servicioPersona;
+    private ServicioDietaImp servicioDieta;
 
     @Before
     public void init() {
-       servicioPersona = new ServicioPersonaImp();
-       servicioConditionScore = new ServicioConditionScoreImp();
+        servicioPersona = new ServicioPersonaImp();
+        servicioDieta = new ServicioDietaImp();
+        servicioConditionScore = new ServicioConditionScoreImp(this.servicioPersona, this.servicioDieta);
+        repositorioPersona = mock(RepositorioPersona.class);
+        when(repositorioPersona.getPersona(any())).thenReturn(makePersona());
     }
 
     @Test
-    public void valorInicialDeCSdeUserEs50(){
+    public void valorInicialDeCSdeUserEs50() {
         Persona persona = makePersona();
         assertThat(servicioConditionScore.getActual(persona)).isEqualTo(50);
     }
 
     @Test
-    public void calcularCSGanadoDePersonaQuierePerderPesoTieneDieta(){
-        Persona persona = makePersona();
-        int csGanado = servicioConditionScore.calculateEffectivity(persona);
+    public void calcularTMBPersonaSinEjercicio() {
+        final int VALOR_ESPERADO = 1782;
 
-        assertThat(csGanado).isEqualTo(10);
-    }
-
-    @Test
-    public void calcularTMBPersonaSinEjercicio(){
-        int VALOR_ESPERADO = 1782;
-        Persona persona = makePersona();
-
+        Persona persona = repositorioPersona.getPersona("userName");
         int valorObtenido = servicioPersona.getTMB(persona);
 
         assertThat(valorObtenido).isEqualTo(VALOR_ESPERADO);
     }
 
-    private List<Dieta> makeDieta(){
+    @Test
+    public void calcularCSGanadoDePersonaQuierePerderPesoTieneDieta() {
+        Persona persona = repositorioPersona.getPersona("userName");
+        int csGanado = servicioConditionScore.calculateEffectivity(persona);
+
+        assertThat(csGanado).isGreaterThanOrEqualTo(-10);
+        assertThat(csGanado).isLessThanOrEqualTo(10);
+        assertThat(csGanado).isEqualTo(10);
+    }
+
+    @Test
+    public void conditionScoreGuartaHasta8Semanas() {
+
+    }
+
+    private List<Dieta> makeDieta() {
         Dieta dieta = new Dieta();
 
         ArrayList<Rutina> rutinas = new ArrayList<Rutina>();
@@ -79,6 +92,7 @@ public class ConditionScoreTest {
 
         return dietas;
     }
+
     private Menu makeMenu() {
         List<Ingrediente> ingredientes = new ArrayList<Ingrediente>();
 
@@ -90,7 +104,7 @@ public class ConditionScoreTest {
         return new Menu(plato);
     }
 
-    private Rutina makeRutina(){
+    private Rutina makeRutina() {
         Ejercicio ej1 = new Ejercicio("Pesas");
         Ejercicio ej2 = new Ejercicio("Flexiones");
 
@@ -102,9 +116,10 @@ public class ConditionScoreTest {
         ejercicios.add(ej1);
         ejercicios.add(ej2);
 
-        return  new Rutina(ejercicios);
+        return new Rutina(ejercicios);
     }
-    private Persona makePersona(){
+
+    private Persona makePersona() {
         Estado enfermedad = new Cardiaco();
         Persona persona = new Persona();
         persona.setDieta(makeDieta());
