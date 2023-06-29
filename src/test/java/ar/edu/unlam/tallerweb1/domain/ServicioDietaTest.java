@@ -97,7 +97,7 @@ public class ServicioDietaTest {
 
     @Test
     public void unaDietaTieneUnPuntaje(){
-        final int VALOR_ESPERADO = 30;
+        final int VALOR_ESPERADO = 20;
         when(repositorioDieta.getAllDietas()).thenReturn(this.makeDieta());
         List<Dieta> dietas = repositorioDieta.getAllDietas();
 
